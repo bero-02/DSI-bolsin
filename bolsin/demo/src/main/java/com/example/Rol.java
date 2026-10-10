@@ -7,7 +7,11 @@ public class Rol {
     public Rol(String nombre) {
         this.nombre = nombre;
     }
-
+// Comportamiento según secuencia[cite: 3]
+    public boolean esGCM() {
+        return this.nombre.equalsIgnoreCase("GCM"); 
+    }
+    
     public String getNombre() { return nombre; }
     public String getDescripcion() { return descripcion; }
 

@@ -9,12 +9,42 @@ public class Bolsin {
     private int numeroPrecinto;
     private double peso;
     private List<CambioEstadoBolsin> cambioEstado;
+    private ComisionMedica comisionMedicaDestino;
 
     public Bolsin(int numeroBolsin, Date fecha) {
         this.numeroBolsin = numeroBolsin;
         this.fecha = fecha;
         this.cambioEstado = new ArrayList<>();
     }
+    // Comportamiento según secuencia[cite: 3]
+    public boolean esEnviado() {
+        CambioEstadoBolsin actual = obtenerEstadoActual(); //[cite: 3]
+        if (actual != null) {
+            return actual.sosEnviado(); //[cite: 3]
+        }
+        return false;
+    }
+
+    public CambioEstadoBolsin obtenerEstadoActual() {
+        for (CambioEstadoBolsin cambio : cambioEstado) {
+            if (cambio.sosActual()) { //[cite: 3]
+                return cambio;
+            }
+        }
+        return null;
+    }
+
+        // Valida si la CM destino es igual a la del usuario
+    public boolean esCMUsuarioIgualCMDestino(ComisionMedica cmUsuario) {
+        return this.comisionMedicaDestino != null && 
+            cmUsuario != null && 
+            this.comisionMedicaDestino.getCodigo() == cmUsuario.getCodigo();
+    }
+
+    // Getters
+    public int getNumeroDePrecinto() { return numeroPrecinto; } //[cite: 3]
+    public void setComisionMedicaDestino(ComisionMedica cm) { this.comisionMedicaDestino = cm; }
+
 
     public Date getFecha() { return fecha; }
     public int getNumeroBolsin() { return numeroBolsin; }

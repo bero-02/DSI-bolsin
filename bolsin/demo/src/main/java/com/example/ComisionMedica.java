@@ -1,6 +1,7 @@
 package com.example;
 
 public class ComisionMedica {
+    // Atributos definidos en el diagrama de clases[cite: 2]
     private int codigo;
     private String nombre;
     private String direccion;
@@ -12,8 +13,13 @@ public class ComisionMedica {
         this.nombre = nombre;
     }
 
+    // Comportamiento requerido por el diagrama de secuencia
+    public String getNombre() { 
+        return nombre; 
+    }
+
+    // Métodos de acceso al resto de los atributos[cite: 2]
     public int getCodigo() { return codigo; }
-    public String getNombre() { return nombre; }
     public String getDireccion() { return direccion; }
     public String getEmail() { return email; }
     public String getTelefono() { return telefono; }
