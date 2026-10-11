@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Bolsines - Correo Nacional</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    >
+</head>
+<body>
+    <header class="app-header">
+        <h1>Sistema de Gestión de Bolsines</h1>
+        <!-- gridLayout: comisionMedica según diagrama de clases -->
+        <div id="gridLayoutComisionMedica" class="user-info">
+            <strong>CM Origen:</strong> <span id="lblComisionMedica">Cargando...</span>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="acciones-principales">
+            <button id="btnConsultarUbicacionBolsin" class="btn btn-primary">Consultar Seguimiento de Bolsines</button>
+            <button id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+        </section>
+
+        <!-- Contenedor del Mapa y Filtros (Oculto al inicio) -->
+        <section id="pantallaUbicacion" class="hidden">
+            <div class="filtros-container">
+                <input type="text" id="filtroPrecinto" placeholder="Filtrar por Nro. Precinto">
+                
+                <!-- selectOpcionCM -->
+                <select id="selectOpcionCM">
+                    <option value="">Todas las CM Destino</option>
+                    <option value="CM-ROS-02">Rosario</option>
+                    <option value="CM-MDZ-03">Mendoza</option>
+                    <option value="CM-CBA-01">Córdoba</option>
+                    <option value="CM-SLA-01">Salta</option>
+                    <option value="CM-MDQ-01">Mar del Plata</option>
+                    <option value="CM-BA-01">Buenos Aires</option>
+                </select>
+            </div>
+
+            <!-- mapaGeografico -->
+            <div id="mapaGeografico" class="mapa-container" aria-label="Mapa de ubicación de bolsines">
+                <p id="estadoMapa" class="map-status hidden">No hay bolsines que coincidan con los filtros.</p>
+            </div>
+        </section>
+
+        <!-- Modal para pedir confirmación de envío de email al GCM -->
+        <div id="modalConfirmacion" class="modal hidden">
+            <div class="modal-content">
+                <h3>Confirmación requerida</h3>
+                <p>¿Desea enviar un correo electrónico al Gerente de Comisión Médica destino para informar la ubicación del Bolsín?</p>
+                <div class="modal-actions">
+                    <button id="btnConfirmarEnvioMailGCM" class="btn btn-primary">Confirmar Envío</button>
+                    <button id="btnCancelarModal" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
