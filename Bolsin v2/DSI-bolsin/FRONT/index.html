@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Bolsines - Correo Nacional</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    >
+</head>
+<body>
+    <!-- Cabecera Dark/Tech -->
+    <header class="app-header">
+        <div>
+            <h1>Sistema de Gestión de Bolsines</h1>
+            <small class="header-subtitle">CU 36: Consultar seguimiento de bolsines (GPS Tracker XTR-4500L)</small>
+        </div>
+        <!-- gridLayout: comisionMedica según diagrama de clases -->
+        <div id="gridLayoutComisionMedica" class="user-info">
+            👤 <strong>EB:</strong> <span id="lblUsuario">Sin consultar</span> &nbsp;|&nbsp;
+            🏥 <strong>CM Origen:</strong> <span id="lblCMOrigen">Sin consultar</span>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <!-- PASO 1 DEL CU 36: El EB selecciona la opción para consultar la ubicación -->
+        <section class="acciones-principales">
+            <button id="btnConsultarUbicacionBolsin" class="btn btn-primary">
+                Consultar Seguimiento de Bolsines
+            </button>
+            <button id="btnCancelar" class="btn btn-secondary hidden">
+                Cancelar
+            </button>
+        </section>
+
+        <!-- Pantalla que se habilita en habilitarPantalla() (Oculta al inicio) -->
+        <section id="pantallaUbicacion" class="hidden">
+            <div class="filtros-container">
+                <div class="filter-field">
+                    <label for="txtFiltroPrecinto">Filtrar por N° de Precinto:</label>
+                    <input type="text" id="txtFiltroPrecinto" placeholder="Ej: PREC-8841">
+                </div>
+
+                <!-- selectOptionCM según diagrama de clases -->
+                <div class="filter-field">
+                    <label for="selectOptionCM">Filtrar por CM Destino:</label>
+                    <select id="selectOptionCM">
+                        <option value="">Todas las Comisiones Médicas Destino</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grilla con Mapa Geográfico + Listado lateral de Bolsines Enviados -->
+            <div class="grid-layout">
+                <!-- mapaGeografico según diagrama de clases -->
+                <div id="mapaGeografico" class="mapa-container" aria-label="Mapa de ubicación de bolsines">
+                    <p id="estadoMapa" class="map-status hidden">No hay bolsines que coincidan con los filtros.</p>
+                </div>
+
+                <!-- Panel lateral de bolsines en tránsito -->
+                <div class="panel-listado">
+                    <h3>Bolsines en Estado Enviado</h3>
+                    <p class="hint">Seleccioná un bolsín del mapa o de la lista para notificar al GCM destino.</p>
+                    <div id="listaBolsines" class="cards-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal Paso 8 y 9: pedirConfirmacionEnvioMailGCM() / tomarConfirmacionEnvioMailGCM() -->
+        <div id="modalConfirmacion" class="modal hidden">
+            <div class="modal-content">
+                <h3>Confirmación requerida</h3>
+                <p id="textoConfirmacion">
+                    ¿Desea enviar un correo electrónico al Gerente de Comisión Médica destino para informar la ubicación del Bolsín?
+                </p>
+                <div class="modal-actions">
+                    <button id="btnCancelarEnvio" class="btn btn-secondary">No enviar</button>
+                    <button id="btnConfirmarEnvioMailGCM" class="btn btn-primary">Confirmar Envío</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Paso 11: <<include>> CU 31 Notificar ubicación de bolsín -->
+        <div id="modalExitoMail" class="modal hidden">
+            <div class="modal-content modal-exito">
+                <h3 class="title-cyan">✅ Correo Enviado Exitosamente</h3>
+                <p class="sub-hint">Se procesó el envío al Servidor de Correo:</p>
+                <div class="mail-preview">
+                    <p><strong>Para (GCM Destino):</strong> <span id="mailPara"></span></p>
+                    <p><strong>Comisión Médica Destino:</strong> <span id="mailCM"></span></p>
+                    <p><strong>Fecha y Hora de Envío:</strong> <span id="mailFecha"></span></p>
+                    <p><strong>Asunto:</strong> <span id="mailAsunto"></span></p>
+                    <hr>
+                    <pre id="mailCuerpo"></pre>
+                </div>
+                <div class="modal-actions">
+                    <button id="btnCerrarExito" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
